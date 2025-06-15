@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - MatBuzz</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-container">
+    <h1>MatBuzz Admin Panel</h1>
+    <h2>Register Your Matatu</h2>
+
+    <form id="matatu-form" onsubmit="registerMatatu(event)">
+      <label for="plate">Matatu Plate Number</label>
+      <input type="text" id="plate" placeholder="e.g. KAA 123A" required />
+
+      <label for="route">Route</label>
+      <input type="text" id="route" placeholder="e.g. Nairobi - Rongai" required />
+
+      <label for="model">Matatu Model</label>
+      <input type="text" id="model" placeholder="e.g. Toyota Hiace" required />
+
+      <button type="submit">Register Matatu</button>
+      <p class="status-message" id="form-status"></p>
+    </form>
+
+    <h2>Registered Matatus & Ratings</h2>
+    <div id="matatu-list">
+      <!-- Registered matatus and their ratings will appear here -->
+    </div>
+  </div>
+
+  <script>
+    const matatuList = document.getElementById('matatu-list');
+
+    function registerMatatu(event) {
+      event.preventDefault();
+      const plate = document.getElementById('plate').value.trim();
+      const route = document.getElementById('route').value.trim();
+      const model = document.getElementById('model').value.trim();
+      const status = document.getElementById('form-status');
+
+      if (!plate || !route || !model) {
+        status.textContent = "Please fill in all fields.";
+        status.style.color = "red";
+        return;
+      }
+
+      const matatuCard = document.createElement('div');
+      matatuCard.className = 'matatu-card';
+      matatuCard.innerHTML = `
+        <h3>${plate}</h3>
+        <p><strong>Route:</strong> ${route}</p>
+        <p><strong>Model:</strong> ${model}</p>
+        <p><strong>Average Rating:</strong> ★★★★☆ (4.0)</p>
+        <p><strong>Latest Review:</strong> Very clean and professional driver!</p>
+      `;
+
+      matatuList.prepend(matatuCard);
+
+      status.textContent = "Matatu registered successfully!";
+      status.style.color = "green";
+
+      document.getElementById('matatu-form').reset();
+    }
+  </script>
+</body>
+</html>
+

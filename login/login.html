@@ -2,25 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - MatBuzz</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <h2>Login</h2>
-    <form action="/login" method="POST">
+  <div class="auth-container">
+    <h1>MatBuzz</h1>
+    <h2>Welcome Back</h2>
+
+    <div class="role-selection">
+      <label><input type="radio" name="role" value="commuter" checked /> Matatu Commuter</label>
+      <label><input type="radio" name="role" value="owner" /> Matatu Owner</label>
+    </div>
+
+    <form onsubmit="return loginUser(event)" novalidate>
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" required />
+      <input type="email" id="email" required placeholder="you@example.com" />
 
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" required />
+      <input type="password" id="password" required placeholder="Enter your password" />
 
       <button type="submit">Login</button>
+      <p class="redirect">Don't have an account? <a href="register.html">Register</a></p>
+      <p class="status-message" id="login-status"></p>
     </form>
-    <div class="switch">
-      Don't have an account? <a href="register.html">Register</a>
-    </div>
   </div>
+
+  <script>
+    function loginUser(event) {
+      event.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const role = document.querySelector('input[name="role"]:checked').value;
+      const status = document.getElementById("login-status");
+
+      if (!email || !password) {
+        status.textContent = "Please fill in all fields.";
+        status.style.color = "red";
+        return false;
+      }
+
+      const roleLabel = role === "commuter" ? "Matatu Commuter" : "Matatu Owner";
+      const redirectPage = role === "commuter" ? "home.html" : "admin-panel.html";
+
+      status.textContent = `Logged in as ${roleLabel}. Redirecting...`;
+      status.style.color = "green";
+
+      setTimeout(() => {
+        window.location.href = redirectPage;
+      }, 1500);
+
+      return false;
+    }
+  </script>
 </body>
 </html>
+
