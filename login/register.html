@@ -12,12 +12,12 @@
     <h1>MatBuzz</h1>
     <h2>Create Your Account</h2>
 
-    <div class="role-selection">
-      <label><input type="radio" name="role" value="commuter" checked onchange="toggleFields()" /> Matatu Commuter</label>
-      <label><input type="radio" name="role" value="owner" onchange="toggleFields()" /> Matatu Owner</label>
-    </div>
+    <form id="register-form" action="register_user.php" method="POST" enctype="multipart/form-data" novalidate>
 
-    <form action="register_user.php" method="POST" enctype="multipart/form-data" novalidate>
+      <div class="role-selection">
+        <label><input type="radio" name="role" value="commuter" checked onchange="toggleFields()" /> Matatu Commuter</label>
+        <label><input type="radio" name="role" value="owner" onchange="toggleFields()" /> Matatu Owner</label>
+      </div>
 
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" required placeholder="Enter your name" />
@@ -48,35 +48,7 @@
       const saccoGroup = document.getElementById("sacco-group");
       saccoGroup.style.display = role === "owner" ? "block" : "none";
     }
-
-    function registerUser(event) {
-      event.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const role = document.querySelector('input[name="role"]:checked').value;
-      const sacco = document.getElementById("sacco")?.value.trim();
-      const profilePic = document.getElementById("profile-pic").files[0];
-      const status = document.getElementById("register-status");
-
-      if (!name || !email || !password || (role === "owner" && !sacco)) {
-        status.textContent = "Please fill in all required fields.";
-        status.style.color = "red";
-        return false;
-      }
-
-      const roleLabel = role === "commuter" ? "Matatu Commuter" : "Matatu Owner";
-      const redirectPage = role === "commuter" ? "home.html" : "admin-panel.html";
-
-      status.textContent = `Registered as ${roleLabel}. Redirecting...`;
-      status.style.color = "green";
-
-      setTimeout(() => {
-        window.location.href = redirectPage;
-      }, 1500);
-
-      return false;
-    }
+    window.onload = toggleFields; // Run on page load
   </script>
 </body>
 </html>

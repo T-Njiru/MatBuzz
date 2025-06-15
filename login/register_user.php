@@ -1,5 +1,5 @@
 <?php
-require_once 'db_connect.php';  // Connect to DB
+require_once 'db_connect.php'; // Make sure this connects properly
 
 // Get form inputs
 $name = $_POST['name'] ?? '';
@@ -41,15 +41,14 @@ try {
         $stmt = $pdo->prepare("INSERT INTO Passenger (name, email, password_hash, photo_url) VALUES (?, ?, ?, ?)");
         $stmt->execute([$name, $email, $passwordHash, $photo_url]);
     } else {
-        $stmt = $pdo->prepare("INSERT INTO Owner (name, email, password_hash, photo_url) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$name, $email, $passwordHash, $photo_url]);
+        $stmt = $pdo->prepare("INSERT INTO Owner (name, email, password_hash, photo_url, sacco) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$name, $email, $passwordHash, $photo_url, $sacco]);
     }
 
-    // Optional: Redirect to email verification
-    header('Location: Verification.php?email=' . urlencode($email));
+    // Redirect to email verification
+    header('Location: welcome.php?email=' . urlencode($email));
     exit();
 
 } catch (Exception $e) {
     exit("❌ Registration failed: " . $e->getMessage());
 }
-?>

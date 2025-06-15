@@ -1,46 +1,40 @@
 <?php
-
-file_put_contents("debug.txt", print_r($_POST, true));
-
+session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . '/../vendor/autoload.php'; 
+require __DIR__ . '/../vendor/autoload.php';
 
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    $email = $_GET['email'] ?? '';
+if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['email'])) {
+    $email = $_GET['email'];
+    $code = str_pad(random_int(0, 99999), 5, '0', STR_PAD_LEFT);
+    $_SESSION['verification_code'] = $code;
+    $_SESSION['email'] = $email;
 
-    if (!empty($email)) {
-        $mail = new PHPMailer(true);
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'tednjiru3@gmail.com';
+        $mail->Password   = 'qtpgtljwisabhcne';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = 465;
 
-        try {
-            // Server settings
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'tednjiru3@gmail.com';           // Your Gmail
-            $mail->Password   = 'qtpgtljwisabhcne';              // App Password (no spaces)
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-            $mail->Port       = 465;
+        $mail->setFrom('tednjiru3@gmail.com', 'MatBuzz Security');
+        $mail->addAddress($email);
 
-            // Recipients
-            $mail->setFrom('tednjiru3@gmail.com', 'Ted');
-            $mail->addAddress($email); 
+        $mail->isHTML(true);
+        $mail->Subject = '🔐 Your MatBuzz Login Verification Code';
+        $mail->Body    = "Your login verification code is: <b>$code</b>";
+        $mail->AltBody = "Your login verification code is: $code";
 
-            // Content
-            $mail->isHTML(true);
-            $mail->Subject = 'Email Verification';
-            $mail->Body    = 'Hi! This is a test email sent to <b>' . htmlspecialchars($email) . '</b>';
-            $mail->AltBody = 'Hi! This is a test email sent to ' . $email;
-
-            $mail->send();
-            echo "✅ Verification email sent to $email.";
-        } catch (Exception $e) {
-            echo "❌ Failed to send email. Error: {$mail->ErrorInfo}";
-        }
-    } else {
-        echo "⚠️ No email was provided.";
+        $mail->send();
+        header("Location: Authentication.php");
+        exit;
+    } catch (Exception $e) {
+        echo "❌ Failed to send verification email. Error: {$mail->ErrorInfo}";
     }
 } else {
-    echo "❌ Invalid request.";
+    echo "❌ Invalid request or missing email.";
 }
