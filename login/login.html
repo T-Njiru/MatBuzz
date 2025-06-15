@@ -12,51 +12,23 @@
     <h1>MatBuzz</h1>
     <h2>Welcome Back</h2>
 
-    <div class="role-selection">
-      <label><input type="radio" name="role" value="commuter" checked /> Matatu Commuter</label>
-      <label><input type="radio" name="role" value="owner" /> Matatu Owner</label>
-    </div>
+    <form action="login.php" method="POST" novalidate>
 
-    <form action="login.php" method="POST" id="login-form" novalidate>
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required placeholder="you@example.com" />
 
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required placeholder="Enter your password" />
 
+      <div class="role-selection">
+        <label><input type="radio" name="role" value="commuter" checked /> Matatu Commuter</label>
+        <label><input type="radio" name="role" value="owner" /> Matatu Owner</label>
+      </div>
+
       <button type="submit">Login</button>
       <p class="redirect">Don't have an account? <a href="register.html">Register</a></p>
       <p class="status-message" id="login-status"></p>
     </form>
   </div>
-
-  <script>
-    function loginUser(event) {
-      event.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const role = document.querySelector('input[name="role"]:checked').value;
-      const status = document.getElementById("login-status");
-
-      if (!email || !password) {
-        status.textContent = "Please fill in all fields.";
-        status.style.color = "red";
-        return false;
-      }
-
-      const roleLabel = role === "commuter" ? "Matatu Commuter" : "Matatu Owner";
-      const redirectPage = role === "commuter" ? "home.html" : "admin-panel.html";
-
-      status.textContent = `Logged in as ${roleLabel}. Redirecting...`;
-      status.style.color = "green";
-
-      setTimeout(() => {
-        window.location.href = redirectPage;
-      }, 1500);
-
-      return false;
-    }
-  </script>
 </body>
 </html>
-

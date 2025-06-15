@@ -1,44 +1,37 @@
 <?php
-session_start();
-require_once 'db_connect.php'; 
+require_once 'db_connect.php'; // makes $pdo available
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST['email'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
-    $role = $_POST['role'] ?? '';
 
-    if (empty($email) || empty($password) || empty($role)) {
-        echo json_encode(["success" => false, "message" => "All fields are required."]);
+    if (empty($email) || empty($password)) {
+        echo json_encode(['success' => false, 'message' => 'All fields are required.']);
         exit;
     }
 
-    $table = $role === 'commuter' ? 'Passenger' : 'Owner';
+    // Check both tables: Passenger and Owner
+    $tables = ['Passenger' => 'passenger_id', 'Owner' => 'owner_id'];
+    $found = false;
 
-    $stmt = $conn->prepare("SELECT * FROM $table WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    foreach ($tables as $table => $idField) {
+        $stmt = $pdo->prepare("SELECT * FROM $table WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+        $user = $stmt->fetch();
 
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+        if ($user && password_verify($password, $user['password_hash'])) {
+            $found = true;
+            session_start();
+            $_SESSION['user_id'] = $user[$idField];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['role'] = strtolower($table); // passenger or owner
 
-        if (password_verify($password, $user['password_hash'])) {
-            $_SESSION['user_id'] = $user[$role === 'commuter' ? 'passenger_id' : 'owner_id'];
-            $_SESSION['role'] = $role;
-            $_SESSION['name'] = $user['name'];
-            $_SESSION['email'] = $user['email'];
-
-            echo json_encode(["success" => true]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Invalid password."]);
+            echo json_encode(['success' => true, 'message' => 'Login successful', 'role' => strtolower($table)]);
+            exit;
         }
-    } else {
-        echo json_encode(["success" => false, "message" => "User not found."]);
     }
 
-    $stmt->close();
-    $conn->close();
-} else {
-    echo json_encode(["success" => false, "message" => "Invalid request."]);
+    echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
+    exit;
 }
 ?>
