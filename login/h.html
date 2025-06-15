@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MatBuzz - Home</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Home - MatBuzz</h1>
+    <p class="tagline">Rate & Review Matatus Across Kenya</p>
+  </header>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">All Reviews</a>
+    <a href="#">Top Rated</a>
+    <a href="#">Submit Review</a>
+    <a href="#">Logout</a>
+  </nav>
+
+  <div class="content">
+    <section class="matatu-card">
+      <h3>Matatu: Forward Travellers 005</h3>
+      <p><strong>Route:</strong> Nairobi - Rongai</p>
+      <p><strong>Rating:</strong> <span class="rating">★★★★☆</span></p>
+      <p><strong>Review:</strong> Clean interior, good music, but a bit rough on driving.</p>
+    </section>
+
+    <section class="matatu-card">
+      <h3>Matatu: Zawadi Sacco 302</h3>
+      <p><strong>Route:</strong> Nairobi - Umoja</p>
+      <p><strong>Rating:</strong> <span class="rating">★★★☆☆</span></p>
+      <p><strong>Review:</strong> Affordable fare, but always overcrowded.</p>
+    </section>
+
+    <section class="review-section">
+      <h2>Leave a Review</h2>
+      <form action="/submit_review" method="POST">
+        <label for="matatu-name">Matatu Name / Plate No.</label><br>
+        <input type="text" id="matatu-name" name="matatu" required><br><br>
+
+        <label for="review">Your Review</label><br>
+        <textarea id="review" name="review" rows="4" required></textarea><br>
+
+        <label for="rating">Rating (1-5)</label><br>
+        <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
+
+        <button type="submit">Submit Review</button>
+      </form>
+    </section>
+  </div>
+</body>
+</html>

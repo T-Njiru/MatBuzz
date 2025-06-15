@@ -45,9 +45,16 @@ try {
         $stmt->execute([$name, $email, $passwordHash, $photo_url, $sacco]);
     }
 
-    // Redirect to email verification
-    header('Location: welcome.php?email=' . urlencode($email));
+  require_once 'welcome.php';
+$result = sendWelcomeEmail($email, $name);
+
+if ($result === true) {
+    header('Location: /MatBuzz/homepage/home.html'); // or confirmation page
     exit();
+} else {
+    exit("❌ Failed to send welcome email: $result");
+}
+
 
 } catch (Exception $e) {
     exit("❌ Registration failed: " . $e->getMessage());
