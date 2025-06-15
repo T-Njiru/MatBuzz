@@ -17,23 +17,24 @@
       <label><input type="radio" name="role" value="owner" onchange="toggleFields()" /> Matatu Owner</label>
     </div>
 
-    <form onsubmit="return registerUser(event)" novalidate>
+    <form action="register_user.php" method="POST" enctype="multipart/form-data" novalidate>
+
       <label for="name">Full Name</label>
-      <input type="text" id="name" required placeholder="Enter your name" />
+      <input type="text" id="name" name="name" required placeholder="Enter your name" />
 
       <div id="sacco-group" style="display: none;">
         <label for="sacco">Sacco Name</label>
-        <input type="text" id="sacco" placeholder="Enter SACCO name" />
+        <input type="text" id="sacco" name="sacco" placeholder="Enter SACCO name" />
       </div>
 
       <label for="email">Email</label>
-      <input type="email" id="email" required placeholder="you@example.com" />
+      <input type="email" id="email" name="email" required placeholder="you@example.com" />
 
       <label for="password">Password</label>
-      <input type="password" id="password" required placeholder="Create a password" />
+      <input type="password" id="password" name="password" required placeholder="Create a password" />
 
       <label for="profile-pic">Profile Picture</label>
-      <input type="file" id="profile-pic" accept="image/*" />
+      <input type="file" id="profile-pic" name="profile_pic" accept="image/*" />
 
       <button type="submit">Register</button>
       <p class="redirect">Already have an account? <a href="login.html">Login</a></p>
@@ -64,7 +65,6 @@
         return false;
       }
 
-      // Just for display purposes (since no backend)
       const roleLabel = role === "commuter" ? "Matatu Commuter" : "Matatu Owner";
       const redirectPage = role === "commuter" ? "home.html" : "admin-panel.html";
 
