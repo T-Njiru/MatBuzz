@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($userCode === $actualCode) {
         $feedback = "✅ Verification successful! Welcome.";
+         header('Location: /MatBuzz/admin/admin.html');
         // Proceed with login or account activation logic here
     } else {
         $feedback = "❌ Incorrect verification code. Try again.";
@@ -35,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
       <button type="submit">Verify</button>
     </form>
+  
 
     <p class="status-message"><?= $feedback ?></p>
   </div>

@@ -49,7 +49,7 @@ try {
 $result = sendWelcomeEmail($email, $name);
 
 if ($result === true) {
-    header('Location: /MatBuzz/homepage/home.html'); // or confirmation page
+    header('Location: login.html'); // or confirmation page
     exit();
 } else {
     exit("❌ Failed to send welcome email: $result");
