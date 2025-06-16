@@ -41,10 +41,46 @@ nav a:hover {
   text-decoration: underline;
 }
 
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem auto;
+  max-width: 600px;
+  gap: 0.5rem;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-bar button {
+  background-color: #007bff;
+  color: white;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
+}
+
 .content {
   max-width: 800px;
   margin: 2rem auto;
   padding: 0 1rem;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 200px;
+  position: relative;
 }
 
 .matatu-card {
@@ -54,6 +90,9 @@ nav a:hover {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 100%;
+  display: none;
 }
 
 .matatu-card h3 {
@@ -100,4 +139,49 @@ nav a:hover {
 
 .review-section button:hover {
   background-color: #0056b3;
+}
+
+.news-section {
+  margin-top: 3rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.news-section h2 {
+  color: #856404;
+  margin-bottom: 1rem;
+}
+
+.news-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.news-section li {
+  margin-bottom: 0.75rem;
+}
+
+.footer {
+  margin-top: 3rem;
+  background-color: #004080;
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.footer-links {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: bold;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
 }
