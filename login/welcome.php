@@ -19,7 +19,7 @@ function sendWelcomeEmail($email, $name) {
         $mail->addAddress($email, $name);
 
         $mail->isHTML(true);
-        $mail->Subject = '🎉 Welcome to MatBuzz!';
+        $mail->Subject = 'Welcome to MatBuzz!';
         $mail->Body    = "Hi <b>$name</b>,<br><br>Thanks for signing up with MatBuzz!";
         $mail->AltBody = "Hi $name,\n\nThanks for signing up with MatBuzz!";
 

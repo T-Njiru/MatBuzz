@@ -29,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: Verification.php?email=" . urlencode($email));
             exit;
         }
+        header("Location: /MatBuzz/homepage/home.html");
+        exit;
 
         echo json_encode(['success' => true, 'message' => 'Login successful', 'role' => $role]);
         exit;
