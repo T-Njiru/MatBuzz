@@ -49,6 +49,17 @@ CREATE TABLE `passenger` (
   `photo_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `matatu` (
+  `SACCO` varchar(20) DEFAULT NULL,
+  `Reg_number` varchar(20) DEFAULT NULL,
+  `route` varchar(100) DEFAULT NULL,
+  `matatu_model` varchar(20) DEFAULT NULL,
+  `Driver_list` varchar(20) DEFAULT NULL,
+  `Conductor_list` varchar(20) DEFAULT NULL,
+  `matatu_photo` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+COMMIT;
+
 --
 -- Dumping data for table `passenger`
 --

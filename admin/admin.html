@@ -12,15 +12,15 @@
     <h1>MatBuzz Admin Panel</h1>
     <h2>Register Your Matatu</h2>
 
-    <form id="matatu-form" onsubmit="registerMatatu(event)">
+    <form id="matatu-form">
       <label for="plate">Matatu Plate Number</label>
-      <input type="text" id="plate" placeholder="e.g. KAA 123A" required />
+      <input type="text" id="plate" name="plate" placeholder="e.g. KAA 123A" required />
 
       <label for="route">Route</label>
-      <input type="text" id="route" placeholder="e.g. Nairobi - Rongai" required />
+      <input type="text" id="route" name="route" placeholder="e.g. Nairobi - Rongai" required />
 
       <label for="model">Matatu Model</label>
-      <input type="text" id="model" placeholder="e.g. Toyota Hiace" required />
+      <input type="text" id="model" name="model" placeholder="e.g. Toyota Hiace" required />
 
       <button type="submit">Register Matatu</button>
       <p class="status-message" id="form-status"></p>
@@ -33,39 +33,45 @@
   </div>
 
   <script>
-    const matatuList = document.getElementById('matatu-list');
+    document.getElementById('matatu-form').addEventListener('submit', function (e) {
+      e.preventDefault();
 
-    function registerMatatu(event) {
-      event.preventDefault();
-      const plate = document.getElementById('plate').value.trim();
-      const route = document.getElementById('route').value.trim();
-      const model = document.getElementById('model').value.trim();
+      const formData = new FormData(this);
       const status = document.getElementById('form-status');
 
-      if (!plate || !route || !model) {
-        status.textContent = "Please fill in all fields.";
-        status.style.color = "red";
-        return;
-      }
+      fetch('admin.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        status.textContent = data.message;
+        status.style.color = data.success ? 'green' : 'red';
 
-      const matatuCard = document.createElement('div');
-      matatuCard.className = 'matatu-card';
-      matatuCard.innerHTML = `
-        <h3>${plate}</h3>
-        <p><strong>Route:</strong> ${route}</p>
-        <p><strong>Model:</strong> ${model}</p>
-        <p><strong>Average Rating:</strong> ★★★★☆ (4.0)</p>
-        <p><strong>Latest Review:</strong> Very clean and professional driver!</p>
-      `;
+        if (data.success) {
+          const plate = formData.get('plate');
+          const route = formData.get('route');
+          const model = formData.get('model');
 
-      matatuList.prepend(matatuCard);
+          const matatuCard = document.createElement('div');
+          matatuCard.className = 'matatu-card';
+          matatuCard.innerHTML = `
+            <h3>${plate}</h3>
+            <p><strong>Route:</strong> ${route}</p>
+            <p><strong>Model:</strong> ${model}</p>
+            <p><strong>Average Rating:</strong> ★★★★☆ (4.0)</p>
+            <p><strong>Latest Review:</strong> Very clean and professional driver!</p>
+          `;
+          document.getElementById('matatu-list').prepend(matatuCard);
 
-      status.textContent = "Matatu registered successfully!";
-      status.style.color = "green";
-
-      document.getElementById('matatu-form').reset();
-    }
+          this.reset();
+        }
+      })
+      .catch(() => {
+        status.textContent = '❌ An error occurred.';
+        status.style.color = 'red';
+      });
+    });
   </script>
 </body>
 </html>
-
