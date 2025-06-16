@@ -20,19 +20,33 @@
     <a href="#">Logout</a>
   </nav>
 
-  <div class="content">
-    <section class="matatu-card">
-      <h3>Matatu: Forward Travellers 005</h3>
-      <p><strong>Route:</strong> Nairobi - Rongai</p>
-      <p><strong>Rating:</strong> <span class="rating">★★★★☆</span></p>
-      <p><strong>Review:</strong> Clean interior, good music, but a bit rough on driving.</p>
-    </section>
+  <div class="search-bar">
+    <input type="text" placeholder="Search Matatus by name or route...">
+    <button>Search</button>
+  </div>
 
-    <section class="matatu-card">
-      <h3>Matatu: Zawadi Sacco 302</h3>
-      <p><strong>Route:</strong> Nairobi - Umoja</p>
-      <p><strong>Rating:</strong> <span class="rating">★★★☆☆</span></p>
-      <p><strong>Review:</strong> Affordable fare, but always overcrowded.</p>
+  <div class="content">
+    <section class="card-container">
+      <div class="matatu-card">
+        <h3>Matatu: Forward Travellers 005</h3>
+        <p><strong>Route:</strong> Nairobi - Rongai</p>
+        <p><strong>Rating:</strong> <span class="rating">★★★★☆</span></p>
+        <p><strong>Review:</strong> Clean interior, good music, but a bit rough on driving.</p>
+      </div>
+
+      <div class="matatu-card">
+        <h3>Matatu: Zawadi Sacco 302</h3>
+        <p><strong>Route:</strong> Nairobi - Umoja</p>
+        <p><strong>Rating:</strong> <span class="rating">★★★☆☆</span></p>
+        <p><strong>Review:</strong> Affordable fare, but always overcrowded.</p>
+      </div>
+
+      <div class="matatu-card">
+        <h3>Matatu: Githurai Pride 222</h3>
+        <p><strong>Route:</strong> CBD - Githurai 45</p>
+        <p><strong>Rating:</strong> <span class="rating">★★★★★</span></p>
+        <p><strong>Review:</strong> Fast, clean and respectful driver.</p>
+      </div>
     </section>
 
     <section class="review-section">
@@ -50,6 +64,43 @@
         <button type="submit">Submit Review</button>
       </form>
     </section>
+
+    <section class="news-section">
+      <h2>Matatu News & Notices</h2>
+      <ul>
+        <li>⚠️ New traffic regulations affecting CBD routes starting July 1st.</li>
+        <li>📢 SACCO registration for Kawangware matatus open till June 30.</li>
+        <li>🛠️ Zawadi Sacco matatu 302 under maintenance till next week.</li>
+      </ul>
+    </section>
   </div>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Contact</a>
+      <a href="#">Help</a>
+    </div>
+    <p>© 2025 MatBuzz. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const cards = document.querySelectorAll('.matatu-card');
+    let current = 0;
+
+    function showNextCard() {
+      cards.forEach((card, index) => {
+        card.style.display = index === current ? 'block' : 'none';
+      });
+      current = (current + 1) % cards.length;
+    }
+
+    if (cards.length > 1) {
+      cards.forEach(card => card.style.display = 'none');
+      showNextCard();
+      setInterval(showNextCard, 3000);
+    }
+  </script>
 </body>
 </html>
