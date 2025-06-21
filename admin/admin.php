@@ -6,12 +6,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $route = trim($_POST['route'] ?? '');
     $SACCO = trim($_POST['SACCO'] ?? '');
     $model = trim($_POST['model'] ?? '');
+    $drivers = trim($_POST['Driver_list'] ?? '');
+    $conductors = trim($_POST['Conductor_list'] ?? '');
 
-    if (empty($plate) || empty($route) || empty($model)) {
+    // ✅ Check required fields
+    if (
+        empty($plate) || empty($route) || empty($SACCO) ||
+        empty($model) || empty($drivers) || empty($conductors)
+    ) {
         echo json_encode(['success' => false, 'message' => '❌ All fields are required.']);
         exit;
     }
 
+    // ✅ Handle photo upload
     $photoPath = '';
     if (isset($_FILES['Matatu_photo']) && $_FILES['Matatu_photo']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . '/../uploads/';
@@ -25,21 +32,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $destination = $uploadDir . $uniqueName;
 
         if (move_uploaded_file($_FILES['Matatu_photo']['tmp_name'], $destination)) {
-            $photoPath = 'uploads/' . $uniqueName; // relative path to save in DB
+            $photoPath = 'uploads/' . $uniqueName;
         } else {
             echo json_encode(['success' => false, 'message' => '❌ Failed to upload image.']);
             exit;
         }
     }
 
+    // ✅ Insert into database
     try {
-        $stmt = $pdo->prepare("INSERT INTO matatu (Reg_number, route, SACCO, matatu_model, matatu_photo) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$plate, $route, $SACCO, $model, $photoPath]);
+        $stmt = $pdo->prepare("INSERT INTO matatu 
+            (Reg_number, route, SACCO, matatu_model, Driver_list, Conductor_list, matatu_photo) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([
+            $plate,
+            $route,
+            $SACCO,
+            $model,
+            $drivers,
+            $conductors,
+            $photoPath
+        ]);
 
         echo json_encode(['success' => true, 'message' => '✅ Matatu registered successfully!']);
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => '❌ Error: ' . $e->getMessage()]);
     }
+
     exit;
 }
 ?>
