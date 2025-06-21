@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MatBuzz - Home</title>
   <link rel="stylesheet" href="home.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
   <header class="header">
@@ -26,6 +27,18 @@
   </div>
 
   <div class="content">
+
+    <section class="filter-box">
+      <h2>Filter Matatus</h2>
+      <label for="filter-route">Select Route:</label>
+      <select id="filter-route">
+        <option value="">-- Choose Route --</option>
+        <option>Nairobi - Rongai</option>
+        <option>Nairobi - Umoja</option>
+        <option>CBD - Githurai 45</option>
+      </select>
+    </section>
+
     <section class="card-container">
       <div class="matatu-card">
         <img src="pictures/matatu3.jpeg" alt="Forward Travellers 005" class="matatu-image">
@@ -49,6 +62,31 @@
         <p><strong>Route:</strong> CBD - Githurai 45</p>
         <p><strong>Rating:</strong> <span class="rating">★★★★★</span></p>
         <p><strong>Review:</strong> Fast, clean and respectful driver.</p>
+      </div>
+    </section>
+
+    <section class="featured-matatu">
+      <h2>Matatu of the Week</h2>
+      <img src="pictures/matatu1.jpeg" alt="Featured Matatu" class="matatu-image">
+      <p><strong>Name:</strong> Super Metro 302</p>
+      <p><strong>Route:</strong> Nairobi - Umoja</p>
+      <p><strong>Why Featured:</strong> Excellent ratings for comfort and punctuality!</p>
+    </section>
+
+    <section class="testimonials">
+      <h2>What Commuters Say</h2>
+      <div class="testimonial-card">"Best matatu experience I've had this month!" – Achieng</div>
+      <div class="testimonial-card">"Clean, well-driven, and polite crew. Will ride again." – Brian</div>
+      <div class="testimonial-card">"Finally a platform where we can speak out!" – Mercy</div>
+    </section>
+
+    <section class="why-matbuzz">
+      <h2>Why Use MatBuzz?</h2>
+      <div class="why-items">
+        <div class="why-card">⭐ Get real reviews from fellow commuters</div>
+        <div class="why-card">🛠️ Help improve public transport experiences</div>
+        <div class="why-card">🚌 Discover top-rated matatus on your route</div>
+        <div class="why-card">💬 Report issues and recommend good service</div>
       </div>
     </section>
 
@@ -84,6 +122,11 @@
       <a href="#">Privacy Policy</a>
       <a href="#">Contact</a>
       <a href="#">Help</a>
+    </div>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
     </div>
     <p>© 2025 MatBuzz. All rights reserved.</p>
   </footer>
