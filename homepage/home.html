@@ -5,116 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MatBuzz - Home</title>
   <link rel="stylesheet" href="home.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
 <body>
+
   <header class="header">
-    <h1>Home - MatBuzz</h1>
-    <p class="tagline">Rate & Review Matatus Across Kenya</p>
+    <div class="logo-title">
+      <img src="pictures/logo.png" alt="MatBuzz Logo" />
+      <div>
+        <h1>MatBuzz</h1>
+        <p class="tagline">Rate & Review Matatus Across Kenya</p>
+      </div>
+    </div>
   </header>
 
   <nav>
     <a href="#">Home</a>
     <a href="#">All Reviews</a>
     <a href="#">Top Rated</a>
-    <a href="#">Submit Review</a>
+    <a href="review/review.html">Submit Review</a>
     <a href="#">Logout</a>
   </nav>
+
+  <div class="hero-section">
+    <img src="pictures/hero.png" alt="Welcome to MatBuzz" />
+    <div class="hero-text">
+      <h2>Welcome to MatBuzz</h2>
+      <p>Discover honest reviews and ratings for matatus in Kenya. Empower your commute with real feedback from real people.</p>
+    </div>
+  </div>
 
   <div class="search-bar">
     <input type="text" placeholder="Search Matatus by name or route...">
     <button>Search</button>
   </div>
 
-  <div class="content">
-
-    <section class="filter-box">
-      <h2>Filter Matatus</h2>
-      <label for="filter-route">Select Route:</label>
-      <select id="filter-route">
-        <option value="">-- Choose Route --</option>
-        <option>Nairobi - Rongai</option>
-        <option>Nairobi - Umoja</option>
-        <option>CBD - Githurai 45</option>
-      </select>
-    </section>
-
-    <section class="card-container">
+  <section class="scroll-container" data-aos="fade-up">
+    <h2 class="section-title">Featured Matatus</h2>
+    <div class="slider">
       <div class="matatu-card">
-        <img src="pictures/matatu3.jpeg" alt="Forward Travellers 005" class="matatu-image">
-        <h3>Matatu: Forward Travellers 005</h3>
+        <img src="pictures/matatu1.jpeg" alt="Matatu" class="matatu-image" />
+        <h3>Forward Travellers 005</h3>
         <p><strong>Route:</strong> Nairobi - Rongai</p>
-        <p><strong>Rating:</strong> <span class="rating">★★★★☆</span></p>
-        <p><strong>Review:</strong> Clean interior, good music, but a bit rough on driving.</p>
+        <p><strong>Rating:</strong> 4 / 5</p>
+        <p><strong>Review:</strong> Clean interior, good music.</p>
       </div>
 
       <div class="matatu-card">
-        <img src="pictures/matatu1.jpeg" alt="Super Metro 302" class="matatu-image">
-        <h3>Matatu: Super Metro 302</h3>
+        <img src="pictures/matatu2.jpeg" alt="Matatu" class="matatu-image" />
+        <h3>Super Metro 302</h3>
         <p><strong>Route:</strong> Nairobi - Umoja</p>
-        <p><strong>Rating:</strong> <span class="rating">★★★☆☆</span></p>
-        <p><strong>Review:</strong> Affordable fare, but always overcrowded.</p>
+        <p><strong>Rating:</strong> 3 / 5</p>
+        <p><strong>Review:</strong> Affordable but crowded.</p>
       </div>
 
       <div class="matatu-card">
-        <img src="pictures/matatu2.jpeg" alt="Nazigi Sacco 222" class="matatu-image">
-        <h3>Matatu: Nazigi Sacco 222</h3>
+        <img src="pictures/matatu3.jpeg" alt="Matatu" class="matatu-image" />
+        <h3>Nazigi Sacco 222</h3>
         <p><strong>Route:</strong> CBD - Githurai 45</p>
-        <p><strong>Rating:</strong> <span class="rating">★★★★★</span></p>
-        <p><strong>Review:</strong> Fast, clean and respectful driver.</p>
+        <p><strong>Rating:</strong> 5 / 5</p>
+        <p><strong>Review:</strong> Fast and respectful driver.</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="featured-matatu">
-      <h2>Matatu of the Week</h2>
-      <img src="pictures/matatu1.jpeg" alt="Featured Matatu" class="matatu-image">
-      <p><strong>Name:</strong> Super Metro 302</p>
-      <p><strong>Route:</strong> Nairobi - Umoja</p>
-      <p><strong>Why Featured:</strong> Excellent ratings for comfort and punctuality!</p>
-    </section>
+  <section class="testimonials" data-aos="fade-up">
+    <h2>What People Are Saying</h2>
+    <div class="testimonial-card">“I love using MatBuzz to decide which matatu to take!” — Joy M.</div>
+    <div class="testimonial-card">“Great to leave honest reviews for my commute.” — Kevin K.</div>
+    <div class="testimonial-card">“Easy to use and helpful.” — Sharon A.</div>
+  </section>
 
-    <section class="testimonials">
-      <h2>What Commuters Say</h2>
-      <div class="testimonial-card">"Best matatu experience I've had this month!" – Achieng</div>
-      <div class="testimonial-card">"Clean, well-driven, and polite crew. Will ride again." – Brian</div>
-      <div class="testimonial-card">"Finally a platform where we can speak out!" – Mercy</div>
-    </section>
-
-    <section class="why-matbuzz">
-      <h2>Why Use MatBuzz?</h2>
-      <div class="why-items">
-        <div class="why-card">⭐ Get real reviews from fellow commuters</div>
-        <div class="why-card">🛠️ Help improve public transport experiences</div>
-        <div class="why-card">🚌 Discover top-rated matatus on your route</div>
-        <div class="why-card">💬 Report issues and recommend good service</div>
+  <section class="why-matbuzz" data-aos="fade-up">
+    <h2>Why Use MatBuzz?</h2>
+    <div class="features">
+      <div class="feature">
+        <h4>Honest Reviews</h4>
+        <p>Genuine feedback from real passengers to guide your journey.</p>
       </div>
-    </section>
+      <div class="feature">
+        <h4>Reliable Ratings</h4>
+        <p>Get clarity before you hop on board.</p>
+      </div>
+      <div class="feature">
+        <h4>Know Before You Go</h4>
+        <p>Stay informed about your daily routes and options.</p>
+      </div>
+      <div class="feature">
+        <h4>Community Driven</h4>
+        <p>Built for commuters, by commuters.</p>
+      </div>
+    </div>
+  </section>
 
-    <section class="review-section">
-      <h2>Leave a Review</h2>
-      <form action="/submit_review" method="POST">
-        <label for="matatu-name">Matatu Name / Plate No.</label><br>
-        <input type="text" id="matatu-name" name="matatu" required><br><br>
-
-        <label for="review">Your Review</label><br>
-        <textarea id="review" name="review" rows="4" required></textarea><br>
-
-        <label for="rating">Rating (1-5)</label><br>
-        <input type="number" id="rating" name="rating" min="1" max="5" required><br><br>
-
-        <button type="submit">Submit Review</button>
-      </form>
-    </section>
-
-    <section class="news-section">
-      <h2>Matatu News & Notices</h2>
-      <ul>
-        <li>⚠️ New traffic regulations affecting CBD routes starting July 1st.</li>
-        <li>📢 SACCO registration for Kawangware matatus open till June 30.</li>
-        <li>🛠️ Super Metro matatu 302 under maintenance till next week.</li>
-      </ul>
-    </section>
-  </div>
+  <section class="news-section" data-aos="fade-up">
+    <h2>Matatu News & Notices</h2>
+    <ul>
+      <li>⚠️ New traffic regulations starting July 1st.</li>
+      <li>📢 SACCO registration open till June 30.</li>
+      <li>🛠️ Super Metro 302 under maintenance.</li>
+    </ul>
+  </section>
 
   <footer class="footer">
     <div class="footer-links">
@@ -123,30 +114,13 @@
       <a href="#">Contact</a>
       <a href="#">Help</a>
     </div>
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-    </div>
     <p>© 2025 MatBuzz. All rights reserved.</p>
   </footer>
 
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
-    const cards = document.querySelectorAll('.matatu-card');
-    let current = 0;
-
-    function showNextCard() {
-      cards.forEach((card, index) => {
-        card.style.display = index === current ? 'block' : 'none';
-      });
-      current = (current + 1) % cards.length;
-    }
-
-    if (cards.length > 1) {
-      cards.forEach(card => card.style.display = 'none');
-      showNextCard();
-      setInterval(showNextCard, 3000);
-    }
+    AOS.init();
   </script>
+
 </body>
 </html>
