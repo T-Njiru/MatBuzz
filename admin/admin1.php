@@ -1,0 +1,101 @@
+<?php
+session_start();
+echo '<pre>';
+print_r($_SESSION);
+echo '</pre>';
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'owner') {
+  header("Location: ../login/login.html");
+  exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - MatBuzz</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-container">
+    <h1>MatBuzz Admin Panel</h1>
+    <h2>Register Your Matatu</h2>
+
+    <form id="matatu-form">
+      <label for="plate">Matatu Plate Number</label>
+      <input type="text" id="plate" name="plate" placeholder="e.g. KAA 123A" required />
+
+      <label for="route">Route</label>
+      <input type="text" id="route" name="route" placeholder="e.g. Nairobi - Rongai" required />
+
+      <label for="SACCO">SACCO</label>
+      <input type="text" id="SACCO" name="SACCO" placeholder="e.g. Welkan" required />
+
+      <label for="model">Matatu Model</label>
+      <input type="text" id="model" name="model" placeholder="e.g. Toyota Hiace" required />
+
+   
+<label for="Driver_list">Drivers (comma-separated)</label>
+<input type="text" id="Driver_list" name="Driver_list" placeholder="e.g. John Doe, Jane Doe" required />
+
+<label for="Conductor_list">Conductors (comma-separated)</label>
+<input type="text" id="Conductor_list" name="Conductor_list" placeholder="e.g. Mark, Janet" required />
+
+
+       <label for="Matatu_photo">Matatu Picture</label>
+      <input type="file" id="Matatu_photo" name="Matatu_photo" accept="image/*" />
+
+      <button type="submit">Register Matatu</button>
+      <p class="status-message" id="form-status"></p>
+    </form>
+
+    <h2>Registered Matatus & Ratings</h2>
+    <div id="matatu-list">
+      <!-- Registered matatus and their ratings will appear here -->
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('matatu-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const status = document.getElementById('form-status');
+
+      fetch('admin.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        status.textContent = data.message;
+        status.style.color = data.success ? 'green' : 'red';
+
+        if (data.success) {
+          const plate = formData.get('plate');
+          const route = formData.get('route');
+          const model = formData.get('model');
+
+          const matatuCard = document.createElement('div');
+          matatuCard.className = 'matatu-card';
+          matatuCard.innerHTML = `
+            <h3>${plate}</h3>
+            <p><strong>Route:</strong> ${route}</p>
+            <p><strong>Model:</strong> ${model}</p>
+            <p><strong>Average Rating:</strong> ★★★★☆ (4.0)</p>
+            <p><strong>Latest Review:</strong> Very clean and professional driver!</p>
+          `;
+          document.getElementById('matatu-list').prepend(matatuCard);
+
+          this.reset();
+        }
+      })
+      .catch(() => {
+        status.textContent = '❌ An error occurred.';
+        status.style.color = 'red';
+      });
+    });
+  </script>
+</body>
+</html>
