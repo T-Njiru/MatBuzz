@@ -2,6 +2,14 @@
 session_start();
 require_once __DIR__ . '/../login/db_connect.php'; 
 
+// Ensure user is logged in as an owner
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'owner') {
+    echo json_encode(['success' => false, 'message' => '❌ Unauthorized access.']);
+    exit;
+}
+
+$owner_id = $_SESSION['user_id']; // Pull owner_id from session
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $plate = trim($_POST['plate'] ?? '');
     $route = trim($_POST['route'] ?? '');
@@ -40,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // ✅ Insert into database
+    // ✅ Insert into database with owner_id
     try {
         $stmt = $pdo->prepare("INSERT INTO matatu 
-            (Reg_number, route, SACCO, matatu_model, Driver_list, Conductor_list, matatu_photo) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)");
+            (Reg_number, route, SACCO, matatu_model, Driver_list, Conductor_list, matatu_photo, owner_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $plate,
             $route,
@@ -52,7 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $model,
             $drivers,
             $conductors,
-            $photoPath
+            $photoPath,
+            $owner_id
         ]);
 
         echo json_encode(['success' => true, 'message' => '✅ Matatu registered successfully!']);
