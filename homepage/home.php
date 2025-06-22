@@ -1,3 +1,8 @@
+<?php
+session_start();
+$isPassenger = isset($_SESSION['role']) && $_SESSION['role'] === 'passenger';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,12 +26,19 @@
         <a href="#featured">Home</a>
         <a href="#">All Reviews</a>
         <a href="#">Top Rated</a>
-        <a href="../review/review.html">Submit Review</a>
+        <a href="../review/review.php">Submit Review</a>
 
         <div class="auth-buttons">
-          <a href="../login/login.html" class="login-btn">Login</a>
-          <a href="../login/register.html" class="signup-btn">Sign Up</a>
-        </div>
+  <?php if ($isPassenger): ?>
+    <a href="../profile/view.php">
+      <img src="<?= htmlspecialchars($_SESSION['photo_url'] ?? 'default_profile.jpg') ?>" class="profile-pic" />
+    </a>
+  <?php else: ?>
+    <a href="../login/login.html" class="login-btn">Login</a>
+    <a href="../login/register.html" class="signup-btn">Sign Up</a>
+  <?php endif; ?>
+</div>
+
       </nav>
     </header>
 

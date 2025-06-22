@@ -22,14 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password_hash'])) {
         $_SESSION['user_id'] = $user[$idField];
         $_SESSION['user_name'] = $user['name'];
-        $_SESSION['role'] = strtolower($table); // owner or passenger
+        $_SESSION['role'] = strtolower($table); 
         $_SESSION['email'] = $user['email'];
 
         if ($role === 'owner') {
             header("Location: Verification.php?email=" . urlencode($email));
             exit;
         }
-        header("Location: /MatBuzz/homepage/home.html");
+        header("Location: /MatBuzz/homepage/home.php");
         exit;
 
         echo json_encode(['success' => true, 'message' => 'Login successful', 'role' => $role]);
