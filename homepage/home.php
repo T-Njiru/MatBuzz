@@ -3,6 +3,7 @@ session_start();
 $isPassenger = isset($_SESSION['role']) && $_SESSION['role'] === 'passenger';
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,6 +34,8 @@ $isPassenger = isset($_SESSION['role']) && $_SESSION['role'] === 'passenger';
     <a href="../profile/view.php">
       <img src="<?= htmlspecialchars($_SESSION['photo_url'] ?? 'default_profile.jpg') ?>" class="profile-pic" />
     </a>
+
+
   <?php else: ?>
     <a href="../login/login.html" class="login-btn">Login</a>
     <a href="../login/register.html" class="signup-btn">Sign Up</a>

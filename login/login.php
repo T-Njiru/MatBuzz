@@ -25,10 +25,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['role'] = strtolower($table); 
         $_SESSION['email'] = $user['email'];
 
+        if ($role === 'passenger') {
+    if (!empty($user['photo_url'])) {
+        $_SESSION['photo_url'] = 'uploads/' . $user['photo_url'];
+    } else {
+        $_SESSION['photo_url'] = 'uploads/default_profile.jpg';
+    }
+}
+
+
         if ($role === 'owner') {
             header("Location: Verification.php?email=" . urlencode($email));
             exit;
         }
+
+
         header("Location: /MatBuzz/homepage/home.php");
         exit;
 
