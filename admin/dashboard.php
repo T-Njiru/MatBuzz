@@ -62,6 +62,20 @@ $matatus = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php if (!empty($message)) echo "<p style='color:green;'>$message</p>"; ?>
     
     <?php foreach ($matatus as $matatu): ?>
+      <?php
+        // Fetch reviews for this matatu
+        $reviewStmt = $pdo->prepare("SELECT r.*, p.name AS passenger_name FROM reviews r JOIN passenger p ON r.passenger_id = p.passenger_id WHERE r.reg_number = ? ORDER BY r.review_date DESC");
+        $reviewStmt->execute([$matatu['Reg_number']]);
+        $reviews = $reviewStmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Calculate average rating
+        $avgRating = 0;
+        if (count($reviews) > 0) {
+            $total = array_sum(array_column($reviews, 'rating'));
+            $avgRating = round($total / count($reviews), 1);
+        }
+      ?>
+
       <form method="POST" class="matatu-edit-form">
         <input type="hidden" name="update_id" value="<?= htmlspecialchars($matatu['Reg_number']) ?>">
 
@@ -81,6 +95,10 @@ $matatus = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <label>Conductors:
           <input type="text" name="Conductor_list" value="<?= htmlspecialchars($matatu['Conductor_list']) ?>" required>
+        </label>
+
+        <label>Average Rating:
+          <?= str_repeat("★", floor($avgRating)) ?><?= ($avgRating - floor($avgRating)) >= 0.5 ? "½" : "" ?> (<?= $avgRating ?>/5)
         </label>
 
         <button type="submit">Update</button>
