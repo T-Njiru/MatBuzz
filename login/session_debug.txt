@@ -1,0 +1,7 @@
+Array
+(
+    [user_id] => 26
+    [user_name] => Ted
+    [role] => passenger
+    [email] => muletedd@gmail.com
+)

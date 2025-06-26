@@ -22,15 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password_hash'])) {
         $_SESSION['user_id'] = $user[$idField];
         $_SESSION['user_name'] = $user['name'];
-        $_SESSION['role'] = strtolower($table); 
+        $_SESSION['role'] = strtolower($table);
         $_SESSION['email'] = $user['email'];
 
-        if ($role === 'passenger') {
-    if (!empty($user['photo_url'])) {
-        $_SESSION['photo_url'] = 'uploads/' . $user['photo_url'];
-    } else {
-        $_SESSION['photo_url'] = 'uploads/default_profile.jpg';
-    }
+        // ✅ Profile picture setup with full relative path
+       if ($role === 'passenger') {
+    $_SESSION['photo_url'] = !empty($user['photo_url']) ? $user['photo_url'] : 'uploads/default_profile.jpg';
 }
 
 
@@ -39,11 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-
         header("Location: /MatBuzz/homepage/home.php");
-        exit;
-
-        echo json_encode(['success' => true, 'message' => 'Login successful', 'role' => $role]);
         exit;
     }
 
