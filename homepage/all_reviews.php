@@ -1,3 +1,6 @@
+<?php
+// Optional: session_start(); if needed for logged-in state
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +21,9 @@
     </div>
 
     <nav class="nav-links">
-      <a href="home.html#featured">Home</a>
+      <a href="home.php#featured">Home</a>
       <a href="#">Top Rated</a>
-      <a href="review/review.html">Submit Review</a>
+      <a href="review/review.php">Submit Review</a>
       <div class="auth-buttons">
         <a href="../login/login.html" class="login-btn">Login</a>
         <a href="../login/register.html" class="signup-btn">Sign Up</a>
@@ -45,32 +48,13 @@
     </section>
 
     <section class="review-cards">
-      <div class="review-card">
-        <h3>Super Metro 302</h3>
-        <p><strong>Route:</strong> Nairobi - Umoja</p>
-        <p><strong>Rating:</strong> 3</p>
-        <p><strong>Review:</strong> Affordable but often crowded.</p>
-      </div>
-
-      <div class="review-card">
-        <h3>Nazigi Sacco 222</h3>
-        <p><strong>Route:</strong> CBD - Githurai 45</p>
-        <p><strong>Rating:</strong> 5</p>
-        <p><strong>Review:</strong> Clean, fast, respectful driver.</p>
-      </div>
-
-      <div class="review-card">
-        <h3>Forward Travellers 005</h3>
-        <p><strong>Route:</strong> Nairobi - Rongai</p>
-        <p><strong>Rating:</strong> 4</p>
-        <p><strong>Review:</strong> Great vibes and music, smooth ride.</p>
-      </div>
+      <?php include 'fetch_reviews.php'; ?>
     </section>
   </main>
 
   <footer class="footer">
     <div class="footer-links">
-      <a href="home.html">Home</a>
+      <a href="home.php">Home</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="contact.html">Contact</a>
       <a href="help.html">Help</a>

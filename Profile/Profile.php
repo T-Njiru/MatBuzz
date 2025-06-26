@@ -15,15 +15,29 @@ if (!empty($matatu)) {
     $drivers = explode(',', $matatu['Driver_list']);
     $conductors = explode(',', $matatu['Conductor_list']);
     $routes = explode(',', $matatu['route']);
+
     $filename = $matatu['matatu_photo'];
-    $fullPath = realpath(__DIR__ . '/../') . '/' . $filename;
+    $basePath = realpath(__DIR__ . '/../');
+
+    // Try original file location
+    $fullPath = $basePath . '/' . $filename;
     $photo = '../' . $filename;
 
-    if (!empty($filename) && file_exists($fullPath)) {
-        $photo = '../' . $filename;
+    // If file not found and it's from pictures/, try homepage/pictures/
+    if (!empty($filename) && !file_exists($fullPath)) {
+        if (str_starts_with($filename, 'pictures/')) {
+            $altPath = $basePath . '/homepage/' . $filename;
+            if (file_exists($altPath)) {
+                $photo = '../homepage/' . $filename;
+            } else {
+                $photo = '../placeholder.jpg';
+            }
+        } else {
+            $photo = '../placeholder.jpg';
+        }
     }
 
-    // Fetch reviews for this matatu
+    // Fetch reviews
     $reviewStmt = $pdo->prepare("SELECT r.*, p.name AS passenger_name FROM reviews r JOIN passenger p ON r.passenger_id = p.passenger_id WHERE r.reg_number = ? ORDER BY r.review_date DESC");
     $reviewStmt->execute([$reg]);
     $reviews = $reviewStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -34,7 +48,6 @@ if (!empty($matatu)) {
         $total = array_sum(array_column($reviews, 'rating'));
         $avgRating = round($total / count($reviews), 1);
     }
-
 ?>
 <div class="profile-header">
   <img src="<?= htmlspecialchars($photo) ?>" alt="Matatu Photo" style="max-width: 300px;" />
