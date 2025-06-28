@@ -1,9 +1,10 @@
+
 <?php
 session_start();
+
 $isPassenger = isset($_SESSION['role']) && $_SESSION['role'] === 'passenger';
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
+
+
 ?>
 
 <!DOCTYPE html>
@@ -31,23 +32,20 @@ echo "</pre>";
         <a href="all_reviews.php">All Reviews</a>
         <a href="#">Top Rated</a>
         <a href="../review/review.html">Submit Review</a>
+
 <div class="auth-buttons">
   <?php if ($isPassenger): ?>
-    <a href="../profile/view.php">
-     <img src="../<?= htmlspecialchars($_SESSION['photo_url'] ?? 'login/uploads/default_profile.jpg') ?>" class="profile-pic" />
-
-    </a>
+    <?php if (!empty($_SESSION['photo_url'])): ?>
+      <a href="../profile/view.php" class="profile-link">
+        <img src="../login/<?= htmlspecialchars($_SESSION['photo_url']) ?>" class="profile-pic" alt="Profile" />
+      </a>
+    <?php endif; ?>
+    <a href="../login/logout.php" class="logout-btn">Logout</a>
   <?php else: ?>
     <a href="../login/login.html" class="login-btn">Login</a>
     <a href="../login/register.html" class="signup-btn">Sign Up</a>
   <?php endif; ?>
 </div>
-<div class="log-out">
-  <?php if ($isPassenger): ?>
-    <a href="../login/logout.php" class="logout-btn">Logout</a>
-  <?php endif; ?>
-</div>
-
 
     </nav>
   </header>
