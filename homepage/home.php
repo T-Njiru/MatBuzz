@@ -1,10 +1,7 @@
 
 <?php
 session_start();
-
 $isPassenger = isset($_SESSION['role']) && $_SESSION['role'] === 'passenger';
-
-
 ?>
 
 <!DOCTYPE html>
