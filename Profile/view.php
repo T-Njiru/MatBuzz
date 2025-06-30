@@ -48,7 +48,7 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php if ($photo_url): ?>
       <img src="../login/<?= htmlspecialchars($photo_url) ?>" alt="Profile Picture" class="profile-pic" />
     <?php endif; ?>
-    <h2><?= htmlspecialchars($name) ?>'s Reviews</h2>
+    <h2><?= htmlspecialchars($name) ?></h2>
 
     <div class="reviews">
       <?php if (count($reviews) > 0): ?>
