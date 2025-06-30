@@ -26,9 +26,9 @@ $isPassenger = isset($_SESSION['role']) && $_SESSION['role'] === 'passenger';
   
   <nav class="nav-links">
         <a href="#featured">Home</a>
-        <a href="all_reviews.php">All Reviews</a>
+        <a href="my_reviews.php">My Reviews</a>
         <a href="#">Top Rated</a>
-        <a href="../review/review.html">Submit Review</a>
+        <a href="../review/review.php">Submit Review</a>
 
 <div class="auth-buttons">
   <?php if ($isPassenger): ?>

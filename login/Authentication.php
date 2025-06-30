@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($userCode === $actualCode) {
         $feedback = "✅ Verification successful! Welcome.";
-         header('Location: /MatBuzz/admin/dashboard.php');
+         header('Location: /MatBuzz/admin/owner_homepage.php');
        
     } else {
         $feedback = "❌ Incorrect verification code. Try again.";
