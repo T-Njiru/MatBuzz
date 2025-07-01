@@ -37,12 +37,30 @@ $isPassenger = isset($_SESSION['role']) && $_SESSION['role'] === 'passenger';
         <img src="../login/<?= htmlspecialchars($_SESSION['photo_url']) ?>" class="profile-pic" alt="Profile" />
       </a>
     <?php endif; ?>
-    <a href="../login/logout.php" class="logout-btn">Logout</a>
+    <a href="../login/logout.php" class="logout-btn-custom">Logout</a>
   <?php else: ?>
     <a href="../login/login.html" class="login-btn">Login</a>
     <a href="../login/register.html" class="signup-btn">Sign Up</a>
   <?php endif; ?>
 </div>
+
+<style>
+.logout-btn-custom {
+  background-color: #ffaa00;
+  color: #000;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.logout-btn-custom:hover {
+  background-color: #e69500;
+}
+</style>
+
 
     </nav>
   </header>
