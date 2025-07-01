@@ -19,11 +19,9 @@ if (!empty($matatu)) {
     $filename = $matatu['matatu_photo'];
     $basePath = realpath(__DIR__ . '/../');
 
-    // Try original file location
     $fullPath = $basePath . '/' . $filename;
     $photo = '../' . $filename;
 
-    // If file not found and it's from pictures/, try homepage/pictures/
     if (!empty($filename) && !file_exists($fullPath)) {
         if (str_starts_with($filename, 'pictures/')) {
             $altPath = $basePath . '/homepage/' . $filename;
@@ -37,16 +35,27 @@ if (!empty($matatu)) {
         }
     }
 
-    // Fetch reviews
-    $reviewStmt = $pdo->prepare("SELECT r.*, p.name AS passenger_name FROM reviews r JOIN passenger p ON r.passenger_id = p.passenger_id WHERE r.reg_number = ? ORDER BY r.review_date DESC");
+    // ✅ Get all ratings (anonymous + registered) for average
+    $ratingStmt = $pdo->prepare("SELECT rating FROM reviews WHERE reg_number = ?");
+    $ratingStmt->execute([$reg]);
+    $allRatings = $ratingStmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // ✅ Get only reviews from registered passengers (with text)
+    $reviewStmt = $pdo->prepare("
+        SELECT r.*, p.name AS passenger_name
+        FROM reviews r
+        JOIN passenger p ON r.passenger_id = p.passenger_id
+        WHERE r.reg_number = ?
+        ORDER BY r.review_date DESC
+    ");
     $reviewStmt->execute([$reg]);
     $reviews = $reviewStmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Calculate average rating
+    // ✅ Calculate average
     $avgRating = 0;
-    if (count($reviews) > 0) {
-        $total = array_sum(array_column($reviews, 'rating'));
-        $avgRating = round($total / count($reviews), 1);
+    if (count($allRatings) > 0) {
+        $total = array_sum($allRatings);
+        $avgRating = round($total / count($allRatings), 1);
     }
 ?>
 <div class="profile-header">
@@ -95,7 +104,7 @@ if (!empty($matatu)) {
   <?php endforeach; ?>
 <?php else: ?>
   <div class="review-box">
-    <em>No reviews yet for this matatu.</em>
+    <em>No reviews yet from registered passengers.</em>
   </div>
 <?php endif; ?>
 
