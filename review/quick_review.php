@@ -1,10 +1,5 @@
 <?php
-session_start();
 require_once __DIR__ . '/../login/db_connect.php';
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'passenger') {
-  header("Location: ../login/login.html");
-  exit;
-}
 
 // Fetch all matatu data
 $stmt = $pdo->query("SELECT Reg_number, SACCO, route FROM matatu");
@@ -28,10 +23,10 @@ foreach ($matatus as $m) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Submit Review - MatBuzz</title>
+  <title>Rate a Matatu - MatBuzz</title>
   <link rel="stylesheet" href="review.css" />
   <style>
-    select, textarea, input[type="range"], button {
+    select, input[type="range"], button {
       width: 100%;
       padding: 0.5rem;
       margin-bottom: 1rem;
@@ -44,9 +39,9 @@ foreach ($matatus as $m) {
   <header class="header">
     <div class="logo-title">
       <img src="images/logo.png" alt="MatBuzz Logo" class="logo">
-      <h1>Submit a Review</h1>
+      <h1>Rate a Matatu</h1>
     </div>
-    <a href="../homepage/home.php" class="back-home-btn">Back to Home</a>
+    <a href="../homepage/home.html" class="back-home-btn">Back to Home</a>
   </header>
 
   <div class="review-wrapper">
@@ -55,8 +50,8 @@ foreach ($matatus as $m) {
     </div>
 
     <div class="review-form-section">
-      <h2>Share Your Experience</h2>
-      <form action="submit_review.php" method="POST">
+      <h2>Quick Rating</h2>
+      <form action="anon_review.php" method="POST">
         <label for="route">Route</label>
         <select id="route" name="route" required>
           <option value="">-- Select Route --</option>
@@ -75,13 +70,10 @@ foreach ($matatus as $m) {
           <option value="">-- Select Matatu --</option>
         </select>
 
-        <label for="review">Your Review</label>
-        <textarea id="review" name="review" rows="4" required></textarea>
-
         <label for="rating">Rating (1 - 5): <span id="ratingValue">3</span></label>
         <input type="range" id="rating" name="rating" min="1" max="5" value="3" oninput="updateRatingValue(this.value)">
 
-        <button type="submit">Submit Review</button>
+        <button type="submit">Submit Rating</button>
       </form>
     </div>
   </div>
