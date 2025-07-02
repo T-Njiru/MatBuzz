@@ -16,23 +16,32 @@ if (!isset($_GET['reg'])) {
 
 $reg = $_GET['reg'];
 
-// Handle update form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['route'])) {
-        // Matatu info update
-        $route = trim($_POST['route']);
-        $model = trim($_POST['model']);
-        $drivers = trim($_POST['Driver_list']);
-        $conductors = trim($_POST['Conductor_list']);
+// Handle delete request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_matatu'])) {
+    // Delete associated reviews
+    $pdo->prepare("DELETE FROM reviews WHERE reg_number = ?")->execute([$reg]);
+    // Delete from favourites
+    $pdo->prepare("DELETE FROM favourites WHERE Reg_number = ?")->execute([$reg]);
+    // Delete matatu
+    $pdo->prepare("DELETE FROM matatu WHERE Reg_number = ? AND owner_id = ?")->execute([$reg, $owner_id]);
 
-        $stmt = $pdo->prepare("UPDATE matatu SET route = ?, matatu_model = ?, Driver_list = ?, Conductor_list = ? WHERE Reg_number = ? AND owner_id = ?");
-        $stmt->execute([$route, $model, $drivers, $conductors, $reg, $owner_id]);
-        $message = "✅ Matatu updated.";
-    } elseif (isset($_POST['review_id'], $_POST['owner_response'])) {
-        // Owner response to review
-        $stmt = $pdo->prepare("UPDATE reviews SET owner_response = ? WHERE review_id = ?");
-        $stmt->execute([trim($_POST['owner_response']), $_POST['review_id']]);
-    }
+    header("Location: ../admin/owner_homepage.php");
+    exit;
+}
+
+// Handle update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['route'])) {
+    $route = trim($_POST['route']);
+    $model = trim($_POST['model']);
+    $drivers = trim($_POST['Driver_list']);
+    $conductors = trim($_POST['Conductor_list']);
+
+    $stmt = $pdo->prepare("UPDATE matatu SET route = ?, matatu_model = ?, Driver_list = ?, Conductor_list = ? WHERE Reg_number = ? AND owner_id = ?");
+    $stmt->execute([$route, $model, $drivers, $conductors, $reg, $owner_id]);
+    $message = "✅ Matatu updated.";
+} elseif (isset($_POST['review_id'], $_POST['owner_response'])) {
+    $stmt = $pdo->prepare("UPDATE reviews SET owner_response = ? WHERE review_id = ?");
+    $stmt->execute([trim($_POST['owner_response']), $_POST['review_id']]);
 }
 
 // Fetch matatu
@@ -62,6 +71,18 @@ $reviews = $reviewStmt->fetchAll(PDO::FETCH_ASSOC);
     .review { margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-left: 4px solid #007bff; }
     .reply { background: #e9f7e9; margin-top: 10px; padding: 10px; border-left: 4px solid green; }
     textarea { width: 100%; }
+    .delete-btn {
+      background: #d9534f;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .delete-btn:hover {
+      background-color: #c9302c;
+    }
   </style>
 </head>
 <body>
@@ -83,6 +104,11 @@ $reviews = $reviewStmt->fetchAll(PDO::FETCH_ASSOC);
         <input type="text" name="Conductor_list" value="<?= htmlspecialchars($matatu['Conductor_list']) ?>" required>
       </label><br><br>
       <button type="submit">Update</button>
+    </form>
+
+    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this matatu? This action cannot be undone.');">
+      <input type="hidden" name="delete_matatu" value="1">
+      <button type="submit" class="delete-btn">🗑️ Delete Matatu</button>
     </form>
 
     <h2>Reviews</h2>

@@ -45,6 +45,17 @@ $matatus = $stmt->fetchAll();
       object-fit: cover;
       border-radius: 10px;
     }
+    .nav-links {
+      text-align: right;
+      padding: 10px 20px;
+      background: #004080;
+    }
+    .nav-links a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -56,25 +67,29 @@ $matatus = $stmt->fetchAll();
         <p class="tagline">Your Matatus in One Place</p>
       </div>
     </div>
+
+    <!-- 🧭 Added Navbar with link to registration.php -->
+    <nav class="nav-links">
+      <a href="../admin/admin.html">+ Register New Matatu</a>
+    </nav>
   </header>
 
   <h2 style="text-align:center; margin-top: 30px;">Your Registered Vehicles</h2>
 
   <div class="matatu-grid">
     <?php foreach ($matatus as $matatu): ?>
-     <?php
-  $imagePath = $matatu['matatu_photo'];
-  if (!str_starts_with($imagePath, 'uploads/')) {
-      $imagePath = 'homepage/pictures/' . basename($imagePath);
-  }
-?>
-<a href="../admin/dashboard.php?reg=<?= urlencode($matatu['Reg_number']) ?>">
-
-<div class="matatu-card">
-  <img src="../<?= htmlspecialchars($imagePath) ?>" alt="Matatu Photo">
-  <p><strong><?= htmlspecialchars($matatu['Reg_number']) ?></strong></p>
-</div>
-</a>
+      <?php
+        $imagePath = $matatu['matatu_photo'];
+        if (!str_starts_with($imagePath, 'uploads/')) {
+            $imagePath = 'homepage/pictures/' . basename($imagePath);
+        }
+      ?>
+      <a href="../admin/dashboard.php?reg=<?= urlencode($matatu['Reg_number']) ?>">
+        <div class="matatu-card">
+          <img src="../<?= htmlspecialchars($imagePath) ?>" alt="Matatu Photo">
+          <p><strong><?= htmlspecialchars($matatu['Reg_number']) ?></strong></p>
+        </div>
+      </a>
     <?php endforeach; ?>
   </div>
 </body>
