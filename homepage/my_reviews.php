@@ -11,7 +11,6 @@ $passenger_id = $_SESSION['user_id'];
 $photo_url = $_SESSION['photo_url'] ?? '';
 $name = $_SESSION['name'] ?? '';
 
-
 $stmt = $pdo->prepare("
     SELECT r.review, r.rating, r.review_date, r.reg_number, m.route
     FROM reviews r
@@ -48,6 +47,15 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
       text-decoration: none;
       width: fit-content;
     }
+    .delete-btn {
+      background: #d9534f;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -63,11 +71,9 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <nav class="nav-links">
       <a href="../homepage/home.php">Home</a>
       <a href="../review/review.php">Submit Review</a>
-   
     </nav>
   </header>
 
-  
   <div class="container">
     <?php if ($photo_url): ?>
       <img src="../login/<?= htmlspecialchars($photo_url) ?>" alt="Profile Picture" class="profile-pic" />
@@ -82,6 +88,11 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p><?= nl2br(htmlspecialchars($review['review'])) ?></p>
             <p>Rating: <?= $review['rating'] ?>/5</p>
             <small>Reviewed on <?= date("F j, Y", strtotime($review['review_date'])) ?></small>
+            <form action="../review/delete_review.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
+              <input type="hidden" name="reg_number" value="<?= htmlspecialchars($review['reg_number']) ?>">
+              <input type="hidden" name="review_date" value="<?= htmlspecialchars($review['review_date']) ?>">
+              <button type="submit" class="delete-btn">Delete Review</button>
+            </form>
           </div>
         <?php endforeach; ?>
       <?php else: ?>

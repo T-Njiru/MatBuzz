@@ -21,6 +21,7 @@ foreach ($matatus as $m) {
   if (!isset($matatuData[$route][$sacco])) $matatuData[$route][$sacco] = [];
   $matatuData[$route][$sacco][] = $reg;
 }
+$passenger_id = $_SESSION['user_id'];
 ?>
 
 <!DOCTYPE html>
@@ -75,6 +76,8 @@ foreach ($matatus as $m) {
           <option value="">-- Select Matatu --</option>
         </select>
 
+        <button type="button" id="fav-btn" disabled>♥ Favourite This Matatu</button>
+
         <label for="review">Your Review</label>
         <textarea id="review" name="review" rows="4" required></textarea>
 
@@ -92,12 +95,14 @@ foreach ($matatus as $m) {
     const routeSelect = document.getElementById('route');
     const saccoSelect = document.getElementById('sacco');
     const matatuSelect = document.getElementById('matatu');
+    const favBtn = document.getElementById('fav-btn');
 
     routeSelect.addEventListener('change', function () {
       const selectedRoute = this.value;
       saccoSelect.innerHTML = '<option value="">-- Select SACCO --</option>';
       matatuSelect.innerHTML = '<option value="">-- Select Matatu --</option>';
       matatuSelect.disabled = true;
+      favBtn.disabled = true;
 
       if (matatuData[selectedRoute]) {
         Object.keys(matatuData[selectedRoute]).forEach(sacco => {
@@ -116,6 +121,7 @@ foreach ($matatus as $m) {
       const selectedRoute = routeSelect.value;
       const selectedSacco = this.value;
       matatuSelect.innerHTML = '<option value="">-- Select Matatu --</option>';
+      favBtn.disabled = true;
 
       if (matatuData[selectedRoute] && matatuData[selectedRoute][selectedSacco]) {
         matatuData[selectedRoute][selectedSacco].forEach(reg => {
@@ -128,6 +134,23 @@ foreach ($matatus as $m) {
       } else {
         matatuSelect.disabled = true;
       }
+    });
+
+    matatuSelect.addEventListener('change', () => {
+      favBtn.disabled = matatuSelect.value === '';
+    });
+
+    favBtn.addEventListener('click', () => {
+      const regNumber = matatuSelect.value;
+      if (!regNumber) return;
+
+      fetch('favourite.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `reg_number=${encodeURIComponent(regNumber)}`
+      })
+      .then(res => res.text())
+      .then(alert);
     });
 
     function updateRatingValue(val) {
