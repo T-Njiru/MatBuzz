@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <link rel="stylesheet" href="login_admin.css" />
 </head>
 <body>
-<h1>Admin Login</h1>
+
 <div class="auth-container">
     <h1>Admin Login</h1>
     <h2>Enter your credentials to receive a verification code</h2>

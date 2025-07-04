@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </head>
 <body>
-  <<div class="auth-container">
+  <div class="auth-container">
     <h1>Admin Verification</h1>
     <h2>Enter the code sent to your email</h2>
 
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
     <div class="redirect">
-      <a href="admin_login.php">← Back to login</a>
+      <a href="login_admin.php">← Back to login</a>
     </div>
   </div>
 </body>
