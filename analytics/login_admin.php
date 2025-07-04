@@ -54,7 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- admin_login.php -->
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Admin Login</title></head>
+<head><meta charset="UTF-8"><title>Admin Login - MatBuzz</title>
+<link rel="stylesheet" href="login_admin.css" />
+</head>
 <body>
 <h1>Admin Login</h1>
 <form method="POST">

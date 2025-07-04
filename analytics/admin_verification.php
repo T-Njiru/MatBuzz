@@ -27,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Verification</title>
+  <title>Admin Verification - MatBuzz</title>
+  <link rel="stylesheet" href="login_admin.css" />
+
 </head>
 <body>
   <h1>Verify Admin Login</h1>
