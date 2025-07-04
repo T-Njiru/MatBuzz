@@ -59,10 +59,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <h1>Admin Login</h1>
-<form method="POST">
-    <label>Email: <input type="email" name="email" required></label><br>
-    <label>Password: <input type="password" name="password" required></label><br>
-    <button type="submit">Send Verification Code</button>
-</form>
+<div class="auth-container">
+    <h1>Admin Login</h1>
+    <h2>Enter your credentials to receive a verification code</h2>
+
+    <?php if (!empty($error)): ?>
+      <p class="status-message" style="color: red;"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+
+    <form method="POST">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">Send Verification Code</button>
+    </form>
+
 </body>
 </html>

@@ -32,13 +32,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </head>
 <body>
-  <h1>Verify Admin Login</h1>
-  <?php if (!empty($error)): ?>
-    <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-  <?php endif; ?>
-  <form method="POST">
-    <label>Verification Code: <input type="text" name="code" required></label><br>
-    <button type="submit">Verify</button>
-  </form>
+  <<div class="auth-container">
+    <h1>Admin Verification</h1>
+    <h2>Enter the code sent to your email</h2>
+
+    <?php if (!empty($error)): ?>
+      <p class="status-message" style="color: red;"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+
+    <form method="POST">
+      <label for="code">Verification Code:</label>
+      <input type="text" id="code" name="code" required />
+      <button type="submit">Verify</button>
+    </form>
+
+    <div class="redirect">
+      <a href="admin_login.php">← Back to login</a>
+    </div>
+  </div>
 </body>
 </html>
