@@ -65,12 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       width: calc(100% - 220px);
     }
     .profile-pic {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
+     width: 80px;
+      height: 80px;
       border-radius: 50%;
-      border: 2px solid #ffaa00;
-      margin-bottom: 1rem;
+      object-fit: cover;
+      border: 2px solid white;
+      margin-bottom: 15px;
     }
     form {
       max-width: 500px;
@@ -111,11 +111,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <img src="../login/<?= htmlspecialchars($photo_url) ?>" alt="Profile Picture" class="profile-pic" />
     <?php endif; ?>
     <strong><?= htmlspecialchars($name) ?></strong>
-    <a href="../home.php">🏠 Home</a>
-    <a href="view.php">📋 My Reviews</a>
-    <a href="profile_edit.php">✏️ Edit Info</a>
-    <a href="../admin/admin1.php">🚌 Register as Owner</a>
-    <a href="../login/logout.php">🚪 Logout</a>
+  <a href="../homepage/home.php">🏠 Home</a>
+  <a href="../homepage/my_reviews.php">📋 My Reviews</a>
+  <a href="../Profile/profile_edit.php">✏️ Edit Info</a>
+  <a href="../admin/admin1.php">🚌 Register as Owner</a>
+  <a href="../homepage/top_rated.php">⭐ Top Rated</a>
+  <a href="../review/review.php">✍️ Submit Review</a>
+  <a href="../login/logout.php">🚪 Logout</a>
   </div>
 
   <div class="main-content">

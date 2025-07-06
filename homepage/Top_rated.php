@@ -9,6 +9,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'passenger') {
 
 $passenger_id = $_SESSION['user_id'];
 
+// Fetch favorite matatus and their ratings
 $stmt = $pdo->prepare("
   SELECT m.Reg_number, m.SACCO, m.route, m.matatu_photo,
          AVG(r.rating) AS avg_rating
@@ -22,6 +23,7 @@ $stmt = $pdo->prepare("
 $stmt->execute([$passenger_id]);
 $favs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,7 +122,7 @@ $favs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <div class="navbar">
     <div style="display: flex; align-items: center;">
-      <img src="pictures/logo.png" alt="MatBuzz Logo" class="logo" />
+      <img src="../homepage/pictures/logo.png" alt="MatBuzz Logo" class="logo" />
       <span style="font-size: 1.2rem; font-weight: bold;">MatBuzz</span>
     </div>
     <a href="../homepage/home.php" class="nav-button">Home</a>
@@ -132,7 +134,14 @@ $favs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php if (count($favs) > 0): ?>
       <?php foreach ($favs as $matatu): ?>
         <div class="matatu-card">
-          <img src="../<?= htmlspecialchars($matatu['matatu_photo']) ?>" alt="Matatu Photo">
+         <?php
+  $photoPath = $matatu['matatu_photo'];
+  if (!str_starts_with($photoPath, 'uploads/') && !str_starts_with($photoPath, 'homepage/')) {
+      $photoPath = 'homepage/' . $photoPath;
+  }
+?>
+<img src="../<?= htmlspecialchars($photoPath) ?>" alt="Matatu Photo">
+
           <div class="matatu-info">
             <div><strong><?= htmlspecialchars($matatu['Reg_number']) ?></strong> - <?= htmlspecialchars($matatu['SACCO']) ?> (<?= htmlspecialchars($matatu['route']) ?>)</div>
             <div class="rating-stars">
