@@ -10,8 +10,15 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'owner') {
 
 $owner_id = $_SESSION['user_id'];
 
-// Fetch matatus for this owner
-$sql = "SELECT Reg_number, matatu_photo FROM matatu WHERE owner_id = ?";
+// Fetch matatus and their average ratings
+$sql = "
+    SELECT m.Reg_number, m.matatu_photo, 
+           COALESCE(ROUND(AVG(r.rating), 1), 'No Ratings Yet') AS avg_rating
+    FROM matatu m
+    LEFT JOIN reviews r ON m.Reg_number = r.reg_number
+    WHERE m.owner_id = ?
+    GROUP BY m.Reg_number, m.matatu_photo
+";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$owner_id]);
 $matatus = $stmt->fetchAll();
@@ -68,7 +75,6 @@ $matatus = $stmt->fetchAll();
       </div>
     </div>
 
-    <!-- 🧭 Added Navbar with link to registration.php -->
     <nav class="nav-links">
       <a href="../admin/admin.html">+ Register New Matatu</a>
     </nav>
@@ -88,6 +94,7 @@ $matatus = $stmt->fetchAll();
         <div class="matatu-card">
           <img src="../<?= htmlspecialchars($imagePath) ?>" alt="Matatu Photo">
           <p><strong><?= htmlspecialchars($matatu['Reg_number']) ?></strong></p>
+          <p>⭐ Average Rating: <?= htmlspecialchars($matatu['avg_rating']) ?></p>
         </div>
       </a>
     <?php endforeach; ?>

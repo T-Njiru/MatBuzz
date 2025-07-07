@@ -63,6 +63,16 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
       cursor: pointer;
       margin-top: 10px;
     }
+    .edit-btn {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
@@ -105,11 +115,18 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="owner-response" style="background:#f9f9f9; border-color:#ccc;">No response yet.</div>
           <?php endif; ?>
 
-          <form action="../review/delete_review.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
+          <form action="../review/delete_review.php" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this review?');">
             <input type="hidden" name="reg_number" value="<?= htmlspecialchars($review['reg_number']) ?>">
             <input type="hidden" name="review_date" value="<?= htmlspecialchars($review['review_date']) ?>">
-            <button type="submit" class="delete-btn">Delete Review</button>
+            <button type="submit" class="delete-btn">Delete</button>
           </form>
+
+          <form action="../review/edit_review.php" method="GET" style="display:inline;">
+            <input type="hidden" name="reg_number" value="<?= htmlspecialchars($review['reg_number']) ?>">
+            <input type="hidden" name="review_date" value="<?= htmlspecialchars($review['review_date']) ?>">
+            <button type="submit" class="edit-btn">Edit</button>
+          </form>
+
         </div>
       <?php endforeach; ?>
     <?php else: ?>
@@ -117,7 +134,7 @@ $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
   </div>
 
-  <a href="../homepage/home.php" class="back-btn">⬅ Back to Home</a>
+  <a href="../homepage/home.php" class="back-btn">&#x2B05; Back to Home</a>
 </div>
 </body>
 </html>
